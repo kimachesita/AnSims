@@ -9,11 +9,16 @@ public abstract class Animal extends Thread{
 	public abstract void nap();
 	public abstract void lunch();
 	public abstract void sleep();
+	public abstract void liveADay();
 	
 	public Animal(String name, int slugRate) {
-		System.out.println("Creating " + this.name);
 		this.name = name;
 		this.slugRate = slugRate;
+	}
+	
+	public Animal(String name) {
+		this.name = name;
+		this.slugRate = 1000;
 	}
 	
 	private void dayLifeCycle() {
@@ -41,5 +46,6 @@ public abstract class Animal extends Thread{
 	
 	public void run() {
 		this.dayLifeCycle();
+		return;
 	}
 }

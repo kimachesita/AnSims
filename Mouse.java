@@ -4,8 +4,8 @@ public class Mouse extends Animal{
 	
 	
 	public Mouse(String name) {
-		super(name + " the Mouse",slugRate);
-
+		super(name,slugRate);
+		System.out.println("Creating Mouse " + name);
 	}
 	public void breakfast() {
 		System.out.println(super.name + " is eating breakfast...");

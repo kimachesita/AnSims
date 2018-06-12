@@ -4,8 +4,8 @@ public class Cat extends Animal{
 	
 	
 	public Cat(String name) {
-		super(name + " the Cat",slugRate);
-
+		super(name,slugRate);
+		System.out.println("Creating Cat " + name);
 	}
 	public void breakfast() {
 		System.out.println(super.name + " is eating breakfast...");
