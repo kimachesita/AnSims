@@ -17,7 +17,7 @@ public class AnimalSimulator {
 			System.out.print("pet to create >> ");
 			input = scanner.nextLine();
 			
-			if(input.matches("\\w*:(Dog|Cat|Mouse|Pig|Bird)")) {
+			if(input.matches("\\w*:(Dog|Cat|Mouse|Pig|Bird|Tiger)")) {
 				
 				String petName = input.split(":")[0];
 				String petKind =  input.split(":")[1];
@@ -27,9 +27,11 @@ public class AnimalSimulator {
 					Class<?> petClass = Class.forName(petKind);
 					Animal pet = (Animal)petClass.getConstructor(new Class[] { String.class }).newInstance(petName);
 					sims.zoo.addPet(pet);
-				} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
+				} catch ( InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
 					System.out.println("Error Creating Pet");
 					System.err.println(e.getMessage());
+				} catch (ClassNotFoundException e) {
+					System.out.println("Cannot spawn. Animal Currently extinct.");
 				}
 				
 			}else if(input.matches("show")){
@@ -40,6 +42,7 @@ public class AnimalSimulator {
 				
 				System.out.println("Initiating Simulation");
 				sims.simulate();
+				while(sims.simulationsNotFinished());
 				
 			}else if(input.matches("exit")) {
 				
@@ -54,10 +57,23 @@ public class AnimalSimulator {
 		}while(!input.matches("exit"));
 		
 		scanner.close();
+		sims.close();
 		
 	}
 	
 	public void simulate() {
-		this.zoo.simulate();
+		this.zoo.simulateADay();
 	}
+	
+	public boolean simulationsNotFinished() {
+		if(this.zoo.isSimulating())
+			return true;
+		else
+			return false;
+	}
+	
+	public void close() {
+		this.zoo.close();
+	}
+	
 }

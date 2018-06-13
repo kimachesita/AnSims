@@ -20,9 +20,23 @@ public class AnimalList {
 		}
 	}
 	
-	public void simulate() {
+	public void simulateADay() {
 		for(Animal pet : list) {
-			pet.liveADay();
+			pet.simulateDay();
+		}
+	}
+	
+	public boolean isSimulating() {
+		boolean simulating = false;
+		for(Animal pet : list) {
+			simulating = simulating || pet.isSimulating();
+		}
+		return simulating;
+	}
+	
+	public void close() {
+		for(Animal pet : list) {
+			pet.kill();
 		}
 	}
 
