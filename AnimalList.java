@@ -2,6 +2,7 @@ import java.util.ArrayList;
 
 public class AnimalList {
 	private ArrayList<Animal> list = new ArrayList<>();
+	private ArrayList<Thread> tList = new ArrayList<>();
 	public String listName;
 	
 	public AnimalList(String name) {
@@ -20,26 +21,22 @@ public class AnimalList {
 		}
 	}
 	
-	public void simulateADay() {
+	public void simulate() {
 		for(Animal pet : list) {
-			pet.simulateDay();
+			Thread t = new Thread(pet);
+			t.start();
+			tList.add(t);
 		}
-	}
-	
-	public boolean isSimulating() {
-		boolean simulating = false;
-		for(Animal pet : list) {
-			simulating = simulating || pet.isSimulating();
-		}
-		return simulating;
-	}
-	
-	public void close() {
-		for(Animal pet : list) {
-			pet.kill();
-		}
-	}
+		while(!tList.isEmpty()) {
+			try {
+				tList.remove(0).join();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 
+		}
+	}
+	
 }
 
 

@@ -1,78 +1,64 @@
-import java.util.concurrent.atomic.AtomicInteger;
-
-public abstract class Animal extends Thread{
+public abstract class Animal implements Runnable{
 	
 	public String name;
 	private int slugRate;
-	private final AtomicInteger state = new AtomicInteger(0); //0- Null, 1- Running , 2 - Simulating 3- Died
+	public String title;
 	
-	public abstract void breakfast();
-	public abstract void poo();
-	public abstract void play();
-	public abstract void nap();
-	public abstract void lunch();
-	public abstract void sleep();
-	
-	
-	protected Animal(String name, int slugRate) {
-		this.name = name;
-		this.slugRate = slugRate;
-		this.state.set(1);
-		this.start();
+	public void breakfast() {
+		System.out.println(title + " is eating breakfast...");
+	}
+	public void poo() {
+		System.out.println(title + " is eating doing poo...");
+	}
+	public void play() {
+		System.out.println(title + " is playing...");
+	}
+	public void nap() {
+		System.out.println(title + " is napping...");
+	}
+	public void lunch() {
+		System.out.println(title + " is eating lunch...");
+	}
+	public void sleep() {
+		System.out.println(title + " is now sleeping...");
 	}
 	
-	protected Animal(String name) {
-		this.name = name;
-		this.slugRate = 1000;
-		this.state.set(1);
-		this.start();
+	protected Animal(String n, int r) {
+		name = n;
+		slugRate = r;
+		title = name + " the " + this.getClass().getName();
 	}
 	
-	protected void simulateDay() {
-		this.state.set(2);
+	protected Animal(String n) {
+		name = n;
+		slugRate = 1000;
+		title = name + " the " + this.getClass().getName();
 	}
-	
-	public boolean isSimulating() {
-		if(this.state.get() == 2) 
-			return true;
-		else 
-			return false;
-	}
-	
-	protected void kill() {
-		this.state.set(3);
-	}
-	
-	
+		
 	private void dayLifeCycle() {
 		try {
-			System.out.println(this.name + " the " + this.getClass().getName() + " begins day.");
+			System.out.println(title + " begins day.");
 			this.breakfast();
-			sleep(this.slugRate);
+			Thread.sleep(slugRate);
 			this.poo();
-			sleep(this.slugRate);
+			Thread.sleep(slugRate);
 			this.play();
-			sleep(this.slugRate);
+			Thread.sleep(slugRate);
 			this.nap();
-			sleep(this.slugRate);
+			Thread.sleep(slugRate);
 			this.lunch();
-			sleep(this.slugRate);
+			Thread.sleep(slugRate);
 			this.play();
-			sleep(this.slugRate);
+			Thread.sleep(slugRate);
 			this.sleep();
-			System.out.println(this.name + " the " + this.getClass().getName() + " ends day.");
+			System.out.println(title +  " ends day.");
 		} catch (InterruptedException e) {
 			System.err.println(e);
 		}
 	}
 	
 	public void run() {
-		while(this.state.get() != 3) {
-			if(this.state.get() == 2) {
-				this.dayLifeCycle();
-				this.state.set(1);
-			}
-			
-		}
+		this.dayLifeCycle();
 	}
+	
 }
