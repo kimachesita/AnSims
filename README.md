@@ -1,2 +1,2 @@
 # AnSims
-A simple program demonstrating Java Threads and OOP Concept
+A simple program demonstrating Java Threads and OOP Concepts
