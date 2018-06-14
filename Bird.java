@@ -1,6 +1,6 @@
 public class Bird extends Animal{
 
-	private static int slugRate = 800;	
+	private static final int slugRate = 800;	
 	
 	public Bird(String n) {
 		super(n,slugRate);

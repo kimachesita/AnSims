@@ -1,7 +1,6 @@
 public class Mouse extends Animal{
 
-	private static int slugRate = 200;	
-	
+	private static final int slugRate = 200;	
 	
 	public Mouse(String n) {
 		super(n,slugRate);
